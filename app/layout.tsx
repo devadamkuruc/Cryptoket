@@ -1,8 +1,11 @@
+"use client"
+
 import type { Metadata } from 'next'
 import {ThemeProvider} from 'next-themes';
 
 import { Footer, Navbar } from '@/components';
 import './globals.css'
+import Script from 'next/script';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -20,6 +23,8 @@ export default function RootLayout({
         <Navbar />
         <body className="dark:bg-nft-dark bg-wjite min-h-screen">{children}</body>
         <Footer />
+
+        <Script src="https://kit.fontawesome.com/f248074af6.js" crossOrigin="anonymous"/>
       </ThemeProvider>
     </html>
   )
