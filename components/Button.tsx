@@ -1,7 +1,7 @@
 interface Props {
   classStyles: string;
   btnName: string;
-  handleClick: () => void;
+  handleClick?: () => void;
 }
 
 const Button = ({ classStyles, btnName, handleClick }: Props) => (

@@ -17,21 +17,19 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>
+      <body className="dark:bg-nft-dark bg-white min-h-screen">
         <Providers>
           <Navbar />
-          <main className="dark:bg-nft-dark bg-white min-h-screen">
-            {children}
-          </main>
+          <main>{children}</main>
           <Footer />
-        </Providers>
 
-        <Script
-          src="https://kit.fontawesome.com/f248074af6.js"
-          crossOrigin="anonymous"
-          rel="preload"
-          type="module"
-        />
+          <Script
+            src="https://kit.fontawesome.com/f248074af6.js"
+            crossOrigin="anonymous"
+            rel="preload"
+            type="module"
+          />
+        </Providers>
       </body>
     </html>
   );
