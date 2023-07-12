@@ -20,7 +20,7 @@ export default function RootLayout({
       <body className="dark:bg-nft-dark bg-white min-h-screen">
         <Providers>
           <Navbar />
-          <main>{children}</main>
+          <main className="pt-65">{children}</main>
           <Footer />
 
           <Script
