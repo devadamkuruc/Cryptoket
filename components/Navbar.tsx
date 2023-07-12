@@ -1,12 +1,12 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { useTheme } from "next-themes";
 
-import images from "../assets";
+import { images } from "../assets";
 import { NavMenuItems, ButtonGroup } from "@/components";
 
 const Navbar = () => {

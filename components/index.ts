@@ -5,6 +5,8 @@ import ButtonGroup from "./ButtonGroup";
 import Footer from "./Footer";
 import FooterLinks from "./FooterLinks";
 import Banner from "./Banner";
+import CreatorCard from "./CreatorCard";
+import BestCreators from "./BestCreators";
 
 export {
   Navbar,
@@ -14,4 +16,6 @@ export {
   Footer,
   FooterLinks,
   Banner,
+  CreatorCard,
+  BestCreators,
 };

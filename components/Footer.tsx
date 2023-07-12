@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useTheme } from "next-themes";
 
-import images from "../assets";
+import { images } from "../assets";
 import { Button, FooterLinks } from "@/components";
 
 const Footer = () => {

@@ -1,5 +1,6 @@
-import { Button } from "@/components";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context";
+
+import { Button } from "@/components";
 
 interface Props {
   setActive: (item: string) => void;
