@@ -1,4 +1,4 @@
-import { Banner, BestCreators } from "@/components";
+import { Banner, BestCreators, HotBids } from "@/components";
 
 const Home = () => {
   return (
@@ -11,6 +11,8 @@ const Home = () => {
         />
 
         <BestCreators />
+
+        <HotBids />
       </div>
     </div>
   );

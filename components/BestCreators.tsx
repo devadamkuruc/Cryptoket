@@ -47,7 +47,7 @@ const BestCreators = () => {
   });
 
   return (
-    <div>
+    <section>
       <h1 className="font-poppins dark:text-white text-nft-black-1 text-2xl minlg:text-4xl font-semibold ml-4 xs:ml-0">
         Best Creators
       </h1>
@@ -99,7 +99,7 @@ const BestCreators = () => {
           )}
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

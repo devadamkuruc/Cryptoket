@@ -7,6 +7,8 @@ import FooterLinks from "./FooterLinks";
 import Banner from "./Banner";
 import CreatorCard from "./CreatorCard";
 import BestCreators from "./BestCreators";
+import HotBids from "./HotBids";
+import NFTCard from "./NFTCard";
 
 export {
   Navbar,
@@ -18,4 +20,6 @@ export {
   Banner,
   CreatorCard,
   BestCreators,
+  HotBids,
+  NFTCard,
 };
