@@ -49,7 +49,7 @@ const Navbar = () => {
       </div>
 
       <div className="flex flex-initial flex-row justify-end">
-        <div className="flex items-center mr-2">
+        <div className="flex items-center mr-2 ">
           <input
             type="checkbox"
             className="checkbox"
@@ -58,7 +58,7 @@ const Navbar = () => {
           />
           <label
             htmlFor="checkbox"
-            className="flexBetween w-8 h-4 bg-black rounded-2xl p-1 relative label"
+            className="flexBetween w-8 h-4 bg-black rounded-2xl p-1 relative label cursor-pointer"
           >
             <i className="fas fa-sun" />
             <i className="fas fa-moon" />
@@ -66,16 +66,16 @@ const Navbar = () => {
           </label>
         </div>
 
-        <div className="md:hidden flex">
+        <div className="md:hidden flex ">
           <NavMenuItems active={active} setActive={setActive} />
 
-          <div className="ml-4">
+          <div className="ml-4 ">
             <ButtonGroup setActive={setActive} router={router} />
           </div>
         </div>
       </div>
 
-      <div className="hidden md:flex ml-2">
+      <div className="hidden md:flex ml-2 cursor-pointer">
         {isOpen ? (
           <Image
             src={images.cross}

@@ -9,6 +9,7 @@ import CreatorCard from "./CreatorCard";
 import BestCreators from "./BestCreators";
 import HotBids from "./HotBids";
 import NFTCard from "./NFTCard";
+import Input from "./Input";
 
 export {
   Navbar,
@@ -22,4 +23,5 @@ export {
   BestCreators,
   HotBids,
   NFTCard,
+  Input,
 };
