@@ -75,7 +75,7 @@ const Navbar = () => {
         </div>
       </div>
 
-      <div className="hidden md:flex ml-2 cursor-pointer">
+      <div className="hidden md:flex ml-2 ">
         {isOpen ? (
           <Image
             src={images.cross}
@@ -83,7 +83,9 @@ const Navbar = () => {
             height={20}
             alt="close"
             onClick={() => setIsOpen(false)}
-            className={theme === "light" ? "filter invert" : undefined}
+            className={`cursor-pointer ${
+              theme === "light" ? "filter invert" : undefined
+            }`}
           />
         ) : (
           <Image
@@ -92,7 +94,9 @@ const Navbar = () => {
             height={25}
             alt="menu"
             onClick={() => setIsOpen(true)}
-            className={theme === "light" ? "filter invert" : undefined}
+            className={`cursor-pointer ${
+              theme === "light" ? "filter invert" : undefined
+            }`}
           />
         )}
 
