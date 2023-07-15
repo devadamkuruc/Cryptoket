@@ -9,3 +9,7 @@ export interface NFT {
   owner: string;
   description: string;
 }
+
+export interface INFTContext {
+  nftCurrency: string;
+}
