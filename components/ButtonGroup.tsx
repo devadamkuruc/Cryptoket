@@ -1,6 +1,8 @@
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context";
 
 import { Button } from "@/components";
+import { NFTContext } from "@/context/NFTContext";
+import { useContext } from "react";
 
 interface Props {
   setActive: (item: string) => void;
@@ -8,9 +10,9 @@ interface Props {
 }
 
 const ButtonGroup = ({ setActive, router }: Props) => {
-  const hasConnected = true;
+  const { connectWallet, currentAccount } = useContext(NFTContext);
 
-  return hasConnected ? (
+  return currentAccount ? (
     <Button
       btnName="Create"
       classStyles="mx-2 rounded-xl"
@@ -23,7 +25,7 @@ const ButtonGroup = ({ setActive, router }: Props) => {
     <Button
       btnName="Connect"
       classStyles="mx-2 rounded-xl"
-      handleClick={() => {}}
+      handleClick={connectWallet}
     />
   );
 };

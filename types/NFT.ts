@@ -1,5 +1,3 @@
-import { ParsedUrlQuery } from "querystring";
-
 export interface NFT {
   i: number;
   image?: string;
@@ -12,4 +10,6 @@ export interface NFT {
 
 export interface INFTContext {
   nftCurrency: string;
+  connectWallet?: () => Promise<void>;
+  currentAccount?: string;
 }
