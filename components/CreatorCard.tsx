@@ -1,10 +1,9 @@
 "use client";
 
-import { useContext } from "react";
 import Image, { StaticImageData } from "next/image";
 
 import { images } from "../assets";
-import { NFTContext } from "@/context/NFTContext";
+import { useCurrentNFTContext } from "@/context/NFTContext";
 
 interface Props {
   rank: number;
@@ -19,7 +18,7 @@ const CreatorCard = ({
   creatorName,
   creatorEths,
 }: Props) => {
-  const { nftCurrency } = useContext(NFTContext);
+  const { nftCurrency } = useCurrentNFTContext();
 
   return (
     <div className="min-w-190 minlg:min-w-240 dark:bg-nft-black-3 bg-white border dark:border-nft-black-3 border-nft-gray-1 rounded-3xl flex flex-col p-4 m-4">
@@ -33,17 +32,16 @@ const CreatorCard = ({
         <div className="relative w-20 h-20 minlg:w-28 minlg:h-28">
           <Image
             src={creatorImage}
-            layout="fill"
-            objectFit="cover"
+            fill
             alt="creatorName"
-            className="rounded-full"
+            className="rounded-full object-cover"
           />
           <div className="absolute w-4 h-4 minlg:w-7 minlg:h-7 bottom-2 -right-0">
             <Image
               src={images.tick}
-              layout="fill"
-              objectFit="contain"
+              fill
               alt="tick"
+              className="object-contain "
             />
           </div>
         </div>

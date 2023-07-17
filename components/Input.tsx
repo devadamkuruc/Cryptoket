@@ -1,8 +1,7 @@
 "use client";
 
-import { ChangeEvent, useContext } from "react";
-
-import { NFTContext } from "@/context/NFTContext";
+import { useCurrentNFTContext } from "@/context/NFTContext";
+import { ChangeEvent } from "react";
 
 interface Props {
   inputType: string;
@@ -12,7 +11,7 @@ interface Props {
 }
 
 const Input = ({ inputType, title, placeholder, handleClick }: Props) => {
-  const { nftCurrency } = useContext(NFTContext);
+  const { nftCurrency } = useCurrentNFTContext();
 
   return (
     <div className="mt-10 w-full">

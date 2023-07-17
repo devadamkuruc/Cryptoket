@@ -74,9 +74,10 @@ const BestCreators = () => {
               >
                 <Image
                   src={images.left}
-                  layout="fill"
-                  objectFit="contain"
-                  className={theme === "light" ? "filter invert" : ""}
+                  fill
+                  className={`${
+                    theme === "light" ? "filter invert" : ""
+                  } object-contain`}
                   alt="left_arrow"
                 />
               </div>
@@ -87,9 +88,10 @@ const BestCreators = () => {
               >
                 <Image
                   src={images.right}
-                  layout="fill"
-                  objectFit="contain"
-                  className={theme === "light" ? "filter invert" : ""}
+                  fill
+                  className={`${
+                    theme === "light" ? "filter invert" : ""
+                  } object-contain`}
                   alt="right_arrow"
                 />
               </div>

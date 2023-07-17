@@ -1,19 +1,18 @@
 "use client";
 
-import { useContext } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
 import { images } from "../assets";
 import { NFT } from "@/types/NFT";
-import { NFTContext } from "@/context/NFTContext";
+import { useCurrentNFTContext } from "@/context/NFTContext";
 
 interface Props {
   nft: NFT;
 }
 
 const NFTCard = ({ nft }: Props) => {
-  const { nftCurrency } = useContext(NFTContext);
+  const { nftCurrency } = useCurrentNFTContext();
   const nftString = encodeURIComponent(JSON.stringify(nft));
 
   return (
@@ -22,9 +21,9 @@ const NFTCard = ({ nft }: Props) => {
         <div className="relative w-full h-52 sm:h-36 xs:h-56 minmd:h-60 minlg:h-300 rounded-2xl overflow-hidden">
           <Image
             src={nft.image || images[`nft${nft.i}`]}
-            layout="fill"
-            objectFit="cover"
+            fill
             alt={`nft${nft.i}`}
+            className="object-cover"
           />
         </div>
         <div className="mt-3 flex flex-col">

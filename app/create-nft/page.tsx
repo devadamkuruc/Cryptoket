@@ -8,7 +8,7 @@ import { useTheme } from "next-themes";
 
 import { Button, Input } from "@/components";
 import { images } from "@/assets";
-import { NFTContext } from "@/context/NFTContext";
+import { useCurrentNFTContext } from "@/context/NFTContext";
 
 const CreateNFT = () => {
   const { theme } = useTheme();
@@ -17,20 +17,24 @@ const CreateNFT = () => {
     name: "",
     description: "",
   });
-  const [fileUrl, setFileUrl] = useState<string | null>(null);
-  const { uploadToIPFS } = useContext(NFTContext);
+  const [fileUrl, setFileUrl] = useState<string>("");
+  const { uploadToIPFS, createNFT } = useCurrentNFTContext();
+  const router = useRouter();
 
-  const onDrop = useCallback(async (acceptedFile: File[]) => {
-    if (uploadToIPFS) {
-      const response = await uploadToIPFS(acceptedFile[0]);
+  const onDrop = useCallback(
+    async (acceptedFile: File[]) => {
+      if (uploadToIPFS) {
+        const response = await uploadToIPFS(acceptedFile[0]);
 
-      if (response.success) {
-        setFileUrl(response.message);
-      } else {
-        console.log(response.message);
+        if (response.success) {
+          setFileUrl(response.message);
+        } else {
+          console.log(response.message);
+        }
       }
-    }
-  }, []);
+    },
+    [uploadToIPFS]
+  );
 
   const {
     getRootProps,
@@ -78,9 +82,10 @@ const CreateNFT = () => {
                     src={images.upload}
                     width={100}
                     height={100}
-                    objectFit="contain"
                     alt="upload"
-                    className={theme === "light" ? "filter invert" : ""}
+                    className={`${
+                      theme === "light" ? "filter invert" : ""
+                    } object-contain`}
                   />
                 </div>
 
@@ -134,7 +139,7 @@ const CreateNFT = () => {
           <Button
             btnName="Create NFT"
             classStyles="rounded-xl"
-            handleClick={() => {}}
+            handleClick={() => createNFT(formInput, fileUrl, router)}
           />
         </div>
       </div>

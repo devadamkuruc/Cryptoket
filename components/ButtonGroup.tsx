@@ -1,8 +1,9 @@
+"use client";
+
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context";
 
 import { Button } from "@/components";
-import { NFTContext } from "@/context/NFTContext";
-import { useContext } from "react";
+import { useCurrentNFTContext } from "@/context/NFTContext";
 
 interface Props {
   setActive: (item: string) => void;
@@ -10,7 +11,7 @@ interface Props {
 }
 
 const ButtonGroup = ({ setActive, router }: Props) => {
-  const { connectWallet, currentAccount } = useContext(NFTContext);
+  const { connectWallet, currentAccount } = useCurrentNFTContext();
 
   return currentAccount ? (
     <Button
