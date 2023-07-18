@@ -1,7 +1,22 @@
+"use client";
+
+import { useEffect, useState } from "react";
+
 import { makeId } from "@/utils/makeId";
 import { NFTCard } from "@/components";
+import { useCurrentNFTContext } from "@/context/NFTContext";
+import { IFormattedNFT } from "@/types/NFT";
 
 const HotBids = () => {
+  const { fetchNFTs } = useCurrentNFTContext();
+  const [nfts, setNfts] = useState<IFormattedNFT[]>([]);
+
+  useEffect(() => {
+    fetchNFTs().then((items) => {
+      setNfts(items);
+    });
+  }, []);
+
   return (
     <section className="mt-10">
       <div className="flexBetween mx-4 xs:mx-0 minlg:mx-8 sm:flex-col sm:items-start">

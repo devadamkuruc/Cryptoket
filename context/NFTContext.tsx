@@ -7,7 +7,13 @@ import axios from "axios";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context";
 
 import { MarketAddress, MarketAddressABI } from "./constants";
-import { IFormInput, INFTContext } from "@/types/NFT";
+import {
+  IFormInput,
+  IFormattedNFT,
+  INFTContext,
+  INFTMetadata,
+  IRawNFT,
+} from "@/types/NFT";
 import createCtx from "@/utils/createCtx";
 
 export const [useCurrentNFTContext, NFTContextProvider] =
@@ -109,7 +115,7 @@ export const NFTProvider = ({ children }: { children: ReactNode }) => {
 
     console.log(data);
 
-    await axios
+    return axios
       .post(url, data, {
         headers: {
           pinata_api_key: process.env.NEXT_PUBLIC_PINATA_API_KEY,
@@ -119,8 +125,10 @@ export const NFTProvider = ({ children }: { children: ReactNode }) => {
       .then(function (response) {
         const url =
           "https://gateway.pinata.cloud/ipfs/" + response.data.IpfsHash;
-        createSale(url, price);
-        router.push("/");
+
+        console.log(url);
+        //createSale(url, price);
+        //router.push("/");
       })
       .catch(function (error) {
         console.log(error);
@@ -153,6 +161,48 @@ export const NFTProvider = ({ children }: { children: ReactNode }) => {
     await transaction.wait();
   };
 
+  const fetchNFTs = async (): Promise<IFormattedNFT[]> => {
+    const provider = new ethers.JsonRpcProvider();
+    const contract = fetchContract(provider);
+
+    const data = await contract.fetchMarketItems();
+
+    const items = await Promise.all(
+      data.map(
+        async ({
+          tokenId,
+          seller,
+          owner,
+          price: unformattedPrice,
+        }: IRawNFT) => {
+          const tokenURI = await contract.tokenURI(tokenId);
+
+          const {
+            data: { image, name, description },
+          } = await axios.get(tokenURI);
+
+          const price = ethers.formatUnits(
+            unformattedPrice.toString(),
+            "ether"
+          );
+
+          return {
+            price,
+            tokenId: Number(tokenId),
+            seller,
+            owner,
+            image,
+            name,
+            description,
+            tokenURI,
+          };
+        }
+      )
+    );
+
+    return items;
+  };
+
   return (
     <NFTContextProvider
       value={{
@@ -161,6 +211,7 @@ export const NFTProvider = ({ children }: { children: ReactNode }) => {
         currentAccount,
         uploadToIPFS,
         createNFT,
+        fetchNFTs,
       }}
     >
       {children}
