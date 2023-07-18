@@ -111,7 +111,7 @@ export const NFTProvider = ({ children }: { children: ReactNode }) => {
 
     if (!name || !description || !price || !fileUrl) return;
 
-    const data = JSON.stringify({ name, description, image: fileUrl });
+    const data = { name, description, image: fileUrl };
 
     console.log(data);
 
@@ -125,10 +125,8 @@ export const NFTProvider = ({ children }: { children: ReactNode }) => {
       .then(function (response) {
         const url =
           "https://gateway.pinata.cloud/ipfs/" + response.data.IpfsHash;
-
-        console.log(url);
-        //createSale(url, price);
-        //router.push("/");
+        createSale(url, price);
+        router.push("/");
       })
       .catch(function (error) {
         console.log(error);
@@ -179,7 +177,11 @@ export const NFTProvider = ({ children }: { children: ReactNode }) => {
 
           const {
             data: { image, name, description },
-          } = await axios.get(tokenURI);
+          } = await axios.get(tokenURI, {
+            headers: {
+              Accept: "text/plain",
+            },
+          });
 
           const price = ethers.formatUnits(
             unformattedPrice.toString(),
@@ -199,6 +201,8 @@ export const NFTProvider = ({ children }: { children: ReactNode }) => {
         }
       )
     );
+
+    console.log(items);
 
     return items;
   };
