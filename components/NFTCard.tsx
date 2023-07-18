@@ -4,11 +4,12 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { images } from "../assets";
-import { NFT } from "@/types/NFT";
+import { IFormattedNFT, NFT } from "@/types/NFT";
 import { useCurrentNFTContext } from "@/context/NFTContext";
+import { shortenAddress } from "@/utils/shortenAddress";
 
 interface Props {
-  nft: NFT;
+  nft: IFormattedNFT;
 }
 
 const NFTCard = ({ nft }: Props) => {
@@ -20,9 +21,9 @@ const NFTCard = ({ nft }: Props) => {
       <div className="flex-1 min-w-215 minsm:min-w-200 sm:min-w-155 minmd:min-w-224 minlg:min-w-288 dark:bg-nft-black-3 bg-white rounded-2xl p-4 sm:my-2 sm:mx-2 cursor-pointer shadow-md">
         <div className="relative w-full h-52 sm:h-36 xs:h-56 minmd:h-60 minlg:h-300 rounded-2xl overflow-hidden">
           <Image
-            src={nft.image || images[`nft${nft.i}`]}
+            src={nft.image}
             fill
-            alt={`nft${nft.i}`}
+            alt={`nft${nft.tokenId}`}
             className="object-cover"
           />
         </div>
@@ -39,7 +40,7 @@ const NFTCard = ({ nft }: Props) => {
               </span>
             </p>
             <p className="font-poppins dark:text-white text-nft-black-1 font-semibold text-xs minlg:text-lg">
-              {nft.seller}
+              {shortenAddress(nft.seller)}
             </p>
           </div>
         </div>

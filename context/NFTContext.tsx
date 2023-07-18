@@ -202,8 +202,6 @@ export const NFTProvider = ({ children }: { children: ReactNode }) => {
       )
     );
 
-    console.log(items);
-
     return items;
   };
 

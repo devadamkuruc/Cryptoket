@@ -2,7 +2,6 @@ import { BigNumberish } from "ethers";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context";
 
 export interface NFT {
-  i: number;
   image?: string;
   name: string;
   price: string;
