@@ -113,8 +113,6 @@ export const NFTProvider = ({ children }: { children: ReactNode }) => {
 
     const data = { name, description, image: fileUrl };
 
-    console.log(data);
-
     return axios
       .post(url, data, {
         headers: {
@@ -205,6 +203,61 @@ export const NFTProvider = ({ children }: { children: ReactNode }) => {
     return items;
   };
 
+  const fetchMyNFTsOrListedNFTs = async (
+    type: string
+  ): Promise<IFormattedNFT[]> => {
+    const web3Modal = new Web3Modal();
+    const connection = await web3Modal.connect();
+    const provider = new ethers.BrowserProvider(connection);
+    const signer = await provider.getSigner();
+
+    const contract = fetchContract(signer);
+
+    const data =
+      type === "fetchItemsListed"
+        ? await contract.fetchItemsListed()
+        : await contract.fetchMyNFTs;
+
+    const items = await Promise.all(
+      data.map(
+        async ({
+          tokenId,
+          seller,
+          owner,
+          price: unformattedPrice,
+        }: IRawNFT) => {
+          const tokenURI = await contract.tokenURI(tokenId);
+
+          const {
+            data: { image, name, description },
+          } = await axios.get(tokenURI, {
+            headers: {
+              Accept: "text/plain",
+            },
+          });
+
+          const price = ethers.formatUnits(
+            unformattedPrice.toString(),
+            "ether"
+          );
+
+          return {
+            price,
+            tokenId: Number(tokenId),
+            seller,
+            owner,
+            image,
+            name,
+            description,
+            tokenURI,
+          };
+        }
+      )
+    );
+
+    return items;
+  };
+
   return (
     <NFTContextProvider
       value={{
@@ -214,6 +267,7 @@ export const NFTProvider = ({ children }: { children: ReactNode }) => {
         uploadToIPFS,
         createNFT,
         fetchNFTs,
+        fetchMyNFTsOrListedNFTs,
       }}
     >
       {children}

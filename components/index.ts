@@ -10,6 +10,7 @@ import BestCreators from "./BestCreators";
 import HotBids from "./HotBids";
 import NFTCard from "./NFTCard";
 import Input from "./Input";
+import Loader from "./Loader";
 
 export {
   Navbar,
@@ -24,4 +25,5 @@ export {
   HotBids,
   NFTCard,
   Input,
+  Loader,
 };

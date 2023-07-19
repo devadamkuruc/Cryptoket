@@ -21,6 +21,7 @@ export interface INFTContext {
     router: AppRouterInstance
   ) => Promise<void | IUploadToIPFSResponse>;
   fetchNFTs: () => Promise<IFormattedNFT[]>;
+  fetchMyNFTsOrListedNFTs: (type: string) => Promise<IFormattedNFT[]>;
 }
 
 export interface IUploadToIPFSResponse {
