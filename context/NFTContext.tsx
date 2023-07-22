@@ -213,7 +213,7 @@ export const NFTProvider = ({ children }: { children: ReactNode }) => {
     const data =
       type === "fetchItemsListed"
         ? await contract.fetchItemsListed()
-        : await contract.fetchMyNFTs;
+        : await contract.fetchMyNFTs();
 
     const items = await Promise.all(
       data.map(
@@ -255,6 +255,23 @@ export const NFTProvider = ({ children }: { children: ReactNode }) => {
     return items;
   };
 
+  const buyNFT = async (nft: IFormattedNFT) => {
+    const web3Modal = new Web3Modal();
+    const connection = await web3Modal.connect();
+    const provider = new ethers.BrowserProvider(connection);
+    const signer = await provider.getSigner();
+
+    const contract = fetchContract(signer);
+
+    const price = ethers.parseUnits(nft.price.toString(), "ether");
+
+    const transaction = await contract.createMarketSale(nft.tokenId, {
+      value: price,
+    });
+
+    await transaction.wait();
+  };
+
   return (
     <NFTContextProvider
       value={{
@@ -265,6 +282,7 @@ export const NFTProvider = ({ children }: { children: ReactNode }) => {
         createNFT,
         fetchNFTs,
         fetchMyNFTsOrListedNFTs,
+        buyNFT,
       }}
     >
       {children}

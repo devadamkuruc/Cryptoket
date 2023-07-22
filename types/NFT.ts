@@ -22,6 +22,7 @@ export interface INFTContext {
   ) => Promise<void>;
   fetchNFTs: () => Promise<IFormattedNFT[]>;
   fetchMyNFTsOrListedNFTs: (type: string) => Promise<IFormattedNFT[]>;
+  buyNFT: (nft: IFormattedNFT) => Promise<void>;
 }
 
 export interface IUploadToIPFSResponse {
