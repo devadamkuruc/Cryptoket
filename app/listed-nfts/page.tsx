@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 
 import { useCurrentNFTContext } from "@/context/NFTContext";
 import { Loader, NFTCard } from "@/components";

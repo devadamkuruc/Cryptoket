@@ -14,10 +14,9 @@ interface Props {
 
 const NFTCard = ({ nft }: Props) => {
   const { nftCurrency } = useCurrentNFTContext();
-  const nftString = encodeURIComponent(JSON.stringify(nft));
 
   return (
-    <Link href={{ pathname: "/nft-details", query: nftString }}>
+    <Link href={{ pathname: "/nft-details", query: { ...nft } }}>
       <div className="flex-1 min-w-215 minsm:min-w-200 sm:min-w-155 minmd:min-w-224 minlg:min-w-288 dark:bg-nft-black-3 bg-white rounded-2xl p-4 sm:my-2 sm:mx-2 cursor-pointer shadow-md">
         <div className="relative w-full h-52 sm:h-36 xs:h-56 minmd:h-60 minlg:h-300 rounded-2xl overflow-hidden">
           <Image

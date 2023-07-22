@@ -113,26 +113,23 @@ export const NFTProvider = ({ children }: { children: ReactNode }) => {
 
     const data = { name, description, image: fileUrl };
 
-    return axios
-      .post(url, data, {
+    try {
+      const response = await axios.post(url, data, {
         headers: {
           pinata_api_key: process.env.NEXT_PUBLIC_PINATA_API_KEY,
           pinata_secret_api_key: process.env.NEXT_PUBLIC_PINATA_SECRET,
         },
-      })
-      .then(function (response) {
-        const url =
-          "https://gateway.pinata.cloud/ipfs/" + response.data.IpfsHash;
-        createSale(url, price);
-        router.push("/");
-      })
-      .catch(function (error) {
-        console.log(error);
-        return {
-          success: false,
-          message: error.message,
-        };
       });
+
+      const ipfsHash = response.data.IpfsHash;
+      const urlWithHash = "https://gateway.pinata.cloud/ipfs/" + ipfsHash;
+      await createSale(urlWithHash, price);
+
+      router.push("/");
+    } catch (error) {
+      console.error("Error uploading file to IPFS");
+      console.error("Actual Error: ", error);
+    }
   };
 
   const createSale = async (

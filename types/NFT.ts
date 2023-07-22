@@ -13,13 +13,13 @@ export interface NFT {
 export interface INFTContext {
   nftCurrency: string;
   connectWallet: () => Promise<void>;
-  currentAccount?: string;
+  currentAccount: string;
   uploadToIPFS: (file: File) => Promise<IUploadToIPFSResponse>;
   createNFT: (
     formInput: IFormInput,
     fileUrl: string,
     router: AppRouterInstance
-  ) => Promise<void | IUploadToIPFSResponse>;
+  ) => Promise<void>;
   fetchNFTs: () => Promise<IFormattedNFT[]>;
   fetchMyNFTsOrListedNFTs: (type: string) => Promise<IFormattedNFT[]>;
 }
