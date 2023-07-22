@@ -101,7 +101,13 @@ const CreateNFT = () => {
             {fileUrl ? (
               <aside>
                 <div>
-                  <img src={fileUrl} alt="asset_file" />
+                  <Image
+                    src={fileUrl}
+                    alt="asset_file"
+                    className="rounded mt-4"
+                    width={350}
+                    height={350}
+                  />
                 </div>
               </aside>
             ) : (

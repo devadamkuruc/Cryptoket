@@ -10,9 +10,10 @@ import { shortenAddress } from "@/utils/shortenAddress";
 
 interface Props {
   nft: IFormattedNFT;
+  onProfilePage: boolean;
 }
 
-const NFTCard = ({ nft }: Props) => {
+const NFTCard = ({ nft, onProfilePage }: Props) => {
   const { nftCurrency } = useCurrentNFTContext();
 
   return (
@@ -39,7 +40,7 @@ const NFTCard = ({ nft }: Props) => {
               </span>
             </p>
             <p className="font-poppins dark:text-white text-nft-black-1 font-semibold text-xs minlg:text-lg">
-              {shortenAddress(nft.seller)}
+              {shortenAddress(onProfilePage ? nft.owner : nft.seller)}
             </p>
           </div>
         </div>
