@@ -7,9 +7,16 @@ import { RefObject, useEffect, useRef, useState } from "react";
 import { CreatorCard } from "@/components";
 import { makeId } from "@/utils/makeId";
 import { images } from "../assets";
+import { ITopCreator, getTopCreators } from "@/utils/getTopCreators";
+import { useCurrentNFTContext } from "@/context/NFTContext";
+import { IFormattedNFT } from "@/types/NFT";
+import { shortenAddress } from "@/utils/shortenAddress";
 
 const BestCreators = () => {
-  const [hideButtons, setHideButtons] = useState(false);
+  const { fetchNFTs } = useCurrentNFTContext();
+  const [hideButtons, setHideButtons] = useState<boolean>(false);
+  const [nfts, setNfts] = useState<IFormattedNFT[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const { theme } = useTheme();
   const parentRef: RefObject<HTMLDivElement> = useRef(null);
   const scrollRef: RefObject<HTMLDivElement> = useRef(null);
@@ -46,6 +53,15 @@ const BestCreators = () => {
     };
   });
 
+  useEffect(() => {
+    fetchNFTs().then((items) => {
+      setNfts(items);
+      setIsLoading(false);
+    });
+  }, []);
+
+  const topCreators: ITopCreator[] = getTopCreators(nfts);
+
   return (
     <section>
       <h1 className="font-poppins dark:text-white text-nft-black-1 text-2xl minlg:text-4xl font-semibold ml-4 xs:ml-0">
@@ -56,13 +72,13 @@ const BestCreators = () => {
           className="flex flex-row w-max overflow-x-scroll no-scrollbar select-none"
           ref={scrollRef}
         >
-          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((i) => (
+          {topCreators.map((creator, i) => (
             <CreatorCard
-              key={`creator-${i}`}
-              rank={i}
-              creatorImage={images[`creator${i}`]}
-              creatorName={`0x${makeId(3)}...${makeId(4)}`}
-              creatorEths={10 - i * 0.5}
+              key={creator.seller}
+              rank={i + 1}
+              creatorImage={images[`creator${i + 1}`]}
+              creatorName={shortenAddress(creator.seller)}
+              creatorEths={creator.sum}
             />
           ))}
 

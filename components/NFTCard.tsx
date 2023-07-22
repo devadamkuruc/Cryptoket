@@ -10,7 +10,7 @@ import { shortenAddress } from "@/utils/shortenAddress";
 
 interface Props {
   nft: IFormattedNFT;
-  onProfilePage: boolean;
+  onProfilePage?: boolean;
 }
 
 const NFTCard = ({ nft, onProfilePage }: Props) => {
