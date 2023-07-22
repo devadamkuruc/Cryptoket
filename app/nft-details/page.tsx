@@ -6,7 +6,7 @@ import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 
 import { useCurrentNFTContext } from "@/context/NFTContext";
-import { Loader, NFTCard, Button } from "@/components";
+import { Loader, NFTCard, Button, Modal, PaymentBodyCmp } from "@/components";
 import { IFormattedNFT } from "@/types/NFT";
 import { images } from "@/assets";
 import { shortenAddress } from "@/utils/shortenAddress";
@@ -37,6 +37,7 @@ const NFTDetails = ({ searchParams }: Props) => {
     description: "",
     tokenURI: "",
   });
+  const [paymentModal, setPaymentModal] = useState(false);
 
   useEffect(() => {
     if (searchParams) {
@@ -107,10 +108,35 @@ const NFTDetails = ({ searchParams }: Props) => {
             <Button
               btnName={`Buy for ${nft.price} ${nftCurrency}`}
               classStyles="mr-5 sm:mr-0 rounded-xl"
+              handleClick={() => setPaymentModal(true)}
             />
           )}
         </div>
       </div>
+
+      {paymentModal ? (
+        <Modal
+          header="Check Out"
+          body={<PaymentBodyCmp nft={nft} nftCurrency={nftCurrency} />}
+          footer={
+            <div className="flex flex-row sm:flex-col">
+              <Button
+                btnName="Checkout"
+                classStyles="mr-5 sm:mr-0 sm:mb-5 rounded-xl"
+                handleClick={() => {}}
+              />
+              <Button
+                btnName="Cancel"
+                classStyles="rounded-xl"
+                handleClick={() => setPaymentModal(false)}
+              />
+            </div>
+          }
+          handleClose={() => setPaymentModal(false)}
+        />
+      ) : (
+        ""
+      )}
     </div>
   );
 };

@@ -53,10 +53,7 @@ const CreatorCard = ({
         </p>
         <p className="mt-1 font-poppins dark:text-white text-nft-black-1 font-semibold text-base">
           {creatorEths.toFixed(2)}
-          <span className="font-normal">
-            {` `}
-            {nftCurrency}
-          </span>
+          <span className="font-normal ml-1">{nftCurrency}</span>
         </p>
       </div>
     </div>
