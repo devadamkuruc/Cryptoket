@@ -76,3 +76,7 @@ export type ActiveSelectOption =
   | "Recently added"
   | "Price(low to high)"
   | "Price(high to low)";
+
+export interface SortingMethod {
+  (a: IFormattedNFT, b: IFormattedNFT): number;
+}

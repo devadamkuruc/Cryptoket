@@ -8,10 +8,7 @@ import { Loader, NFTCard, Banner, SearchBar } from "@/components";
 import { ActiveSelectOption, IFormattedNFT } from "@/types/NFT";
 import { images } from "@/assets";
 import { shortenAddress } from "@/utils/shortenAddress";
-
-interface SortingMethod {
-  (a: IFormattedNFT, b: IFormattedNFT): number;
-}
+import { sortMethods } from "@/utils";
 
 const MyNFTs = () => {
   const { fetchMyNFTsOrListedNFTs, currentAccount } = useCurrentNFTContext();
@@ -28,18 +25,6 @@ const MyNFTs = () => {
       setIsLoading(false);
     });
   }, []);
-
-  const sortMethods: Record<string, { method: SortingMethod }> = {
-    "Price(low to high)": {
-      method: (a, b) => parseFloat(a.price) - parseFloat(b.price),
-    },
-    "Price(high to low)": {
-      method: (a, b) => parseFloat(b.price) - parseFloat(a.price),
-    },
-    "Recently added": {
-      method: (a, b) => b.tokenId - a.tokenId,
-    },
-  };
 
   const onHandleSearch = (value: string) => {
     const filteredNfts = nfts.filter(({ name }) =>
