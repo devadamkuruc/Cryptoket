@@ -71,3 +71,8 @@ export interface IFormattedNFT {
   price: string;
   tokenURI: string;
 }
+
+export type ActiveSelectOption =
+  | "Recently added"
+  | "Price(low to high)"
+  | "Price(high to low)";

@@ -5,16 +5,21 @@ import Image from "next/image";
 
 import { useCurrentNFTContext } from "@/context/NFTContext";
 import { Loader, NFTCard, Banner, SearchBar } from "@/components";
-import { IFormattedNFT } from "@/types/NFT";
+import { ActiveSelectOption, IFormattedNFT } from "@/types/NFT";
 import { images } from "@/assets";
 import { shortenAddress } from "@/utils/shortenAddress";
+
+interface SortingMethod {
+  (a: IFormattedNFT, b: IFormattedNFT): number;
+}
 
 const MyNFTs = () => {
   const { fetchMyNFTsOrListedNFTs, currentAccount } = useCurrentNFTContext();
   const [nfts, setNfts] = useState<IFormattedNFT[]>([]);
   const [nftsCopy, setNftsCopy] = useState<IFormattedNFT[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [activeSelect, setActiveSelect] = useState("Recently Added");
+  const [activeSelect, setActiveSelect] =
+    useState<ActiveSelectOption>("Recently added");
 
   useEffect(() => {
     fetchMyNFTsOrListedNFTs("fetchMyNFTs").then((items) => {
@@ -24,30 +29,17 @@ const MyNFTs = () => {
     });
   }, []);
 
-  useEffect(() => {
-    const sortedNfts = [...nfts];
-
-    console.log(nfts);
-
-    switch (activeSelect) {
-      case "Price(low to high)":
-        setNfts(
-          sortedNfts.sort((a, b) => parseFloat(a.price) - parseFloat(b.price))
-        );
-        break;
-      case "Price(high to low)":
-        setNfts(
-          sortedNfts.sort((a, b) => parseFloat(b.price) - parseFloat(a.price))
-        );
-        break;
-      case "Recently added":
-        setNfts(sortedNfts.sort((a, b) => b.tokenId - a.tokenId));
-        break;
-      default:
-        setNfts(nfts);
-        break;
-    }
-  }, [activeSelect, nfts]);
+  const sortMethods: Record<string, { method: SortingMethod }> = {
+    "Price(low to high)": {
+      method: (a, b) => parseFloat(a.price) - parseFloat(b.price),
+    },
+    "Price(high to low)": {
+      method: (a, b) => parseFloat(b.price) - parseFloat(a.price),
+    },
+    "Recently added": {
+      method: (a, b) => b.tokenId - a.tokenId,
+    },
+  };
 
   const onHandleSearch = (value: string) => {
     const filteredNfts = nfts.filter(({ name }) =>
@@ -115,7 +107,7 @@ const MyNFTs = () => {
             />
           </div>
           <div className="mt-3 w-full grid minmd:grid-cols-5 grid-cols-4 md:grid-cols-3 mdsm:grid-cols-2 xs:grid-cols-1 gap-8 sm:gap-4">
-            {nfts.map((nft) => (
+            {nfts.sort(sortMethods[activeSelect].method).map((nft) => (
               <NFTCard key={nft.tokenId} nft={nft} onProfilePage />
             ))}
           </div>

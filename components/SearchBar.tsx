@@ -5,10 +5,17 @@ import Image from "next/image";
 import { useTheme } from "next-themes";
 
 import { images } from "@/assets";
+import { ActiveSelectOption } from "@/types/NFT";
+
+const activeSelectList: ActiveSelectOption[] = [
+  "Recently added",
+  "Price(low to high)",
+  "Price(high to low)",
+];
 
 interface Props {
   activeSelect: string;
-  setActiveSelect: Dispatch<SetStateAction<string>>;
+  setActiveSelect: Dispatch<SetStateAction<ActiveSelectOption>>;
   handleSearch: (value: string) => void;
   clearSearch: () => void;
 }
@@ -38,7 +45,7 @@ const SearchBar = ({
     } else {
       clearSearch();
     }
-  }, [search, clearSearch, handleSearch]);
+  }, [search]);
 
   return (
     <>
@@ -80,11 +87,7 @@ const SearchBar = ({
 
         {toggle ? (
           <div className="absolute top-full left-0 right-0 w-full mt-3 z-10 dark:bg-nft-black-2 bg-white border dark:border-nft-black-2 border-nft-gray-2 py-3 px-4 rounded-md">
-            {[
-              "Recently added",
-              "Price (low to hight)",
-              "Price (high to low)",
-            ].map((item, index) => (
+            {activeSelectList.map((item, index) => (
               <p
                 key={index}
                 className="font-poppins dark:text-white text-nft-black-1 font-normal text-xs my-3 cursor-pointer"
